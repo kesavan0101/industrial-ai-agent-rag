@@ -11,16 +11,6 @@ An end-to-end Agentic AI system that continuously monitors multivariate industri
 
 ---
 
-## System Architecture
-
-```text
-                               ┌─► Tool 1: ML Anomaly Detector (Isolation Forest on 160k+ NASA Rows)
-[User / System Input] ──► [LangGraph ReAct Agent]
- (e.g. Unit #260)              └─► Tool 2: Semantic RAG System (ChromaDB + Technical PDF Manuals)
-                                       │
-                                       ▼
-                       [Structured Maintenance Action Ticket]
-
 > [!IMPORTANT]
 > **Prerequisites & First-Time Execution Order:**
 > 1. You **must** run `ingest_manuals.py` first to process the PDF documentation and create the `./chroma_db` local vector database.
@@ -32,3 +22,15 @@ An end-to-end Agentic AI system that continuously monitors multivariate industri
 >    ```powershell
 >    .\.venv\Scripts\python.exe agent_system.py
 >    ```
+
+
+## System Architecture
+
+```text
+                               ┌─► Tool 1: ML Anomaly Detector (Isolation Forest on 160k+ NASA Rows)
+[User / System Input] ──► [LangGraph ReAct Agent]
+ (e.g. Unit #260)              └─► Tool 2: Semantic RAG System (ChromaDB + Technical PDF Manuals)
+                                       │
+                                       ▼
+                       [Structured Maintenance Action Ticket]
+
