@@ -19,3 +19,4 @@ An end-to-end Agentic AI system that continuously monitors multivariate industri
                                        │
                                        ▼
                        [Structured Maintenance Action Ticket]
+### System Architecture
