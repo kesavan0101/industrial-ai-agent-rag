@@ -12,16 +12,15 @@ from langgraph.prebuilt import create_react_agent
 DB_DIR = "./chroma_db"
 ARCHIVE_DIR = "./archive"
 
-# Read key from environment variable
+# Read API key from environment variable
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
 # --- TOOL 1: Sensor Data Analyzer ---
-@tool
+@tool(description="Analyzes time-series sensor telemetry for a specific Turbofan Engine Unit across dataset files. Valid Unit IDs are integers between 1 and 260.")
 def analyze_engine_sensors(unit_id: int) -> str:
     """
     Analyzes time-series sensor data for a specific Turbofan Engine Unit across all dataset files.
-    Valid Unit IDs are between 1 and 260.
     Returns detected anomaly flags and current sensor averages.
     """
     file_paths = glob.glob(os.path.join(ARCHIVE_DIR, "train_FD*.txt"))
@@ -66,7 +65,7 @@ def analyze_engine_sensors(unit_id: int) -> str:
 
 
 # --- TOOL 2: RAG Manual Search ---
-@tool
+@tool(description="Searches official equipment manuals and returns troubleshooting steps, error codes, and maintenance procedures matching the query.")
 def search_equipment_manuals(query: str) -> str:
     """
     Searches official equipment manuals and returns troubleshooting steps,

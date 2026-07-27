@@ -9,7 +9,7 @@ DB_DIR = "./chroma_db"
 
 
 def build_vector_store():
-    print("📥 Loading PDF manuals...")
+    print(" Loading PDF manuals...")
     loader = PyPDFDirectoryLoader(MANUALS_DIR)
     raw_docs = loader.load()
     print(f"Loaded {len(raw_docs)} pages from PDF manuals.")
@@ -23,7 +23,7 @@ def build_vector_store():
     print(f"Created {len(chunks)} text chunks.")
 
     # Generate Embeddings & Save to local database
-    print("🧠 Generating embeddings (this may take 1-2 minutes for ~4.3k chunks)...")
+    print(" Generating embeddings (this may take 1-2 minutes for ~4.3k chunks)...")
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
     vector_db = Chroma.from_documents(
@@ -31,7 +31,7 @@ def build_vector_store():
         embedding=embeddings,
         persist_directory=DB_DIR
     )
-    print(f"✅ Vector Database successfully built at '{DB_DIR}'!")
+    print(f" Vector Database successfully built at '{DB_DIR}'!")
 
 
 if __name__ == "__main__":

@@ -27,7 +27,7 @@ def load_all_dataset_files():
         df_list.append(temp_df)
 
     combined_df = pd.concat(df_list, ignore_index=True)
-    print(f"✅ Combined {len(file_paths)} NASA files into {len(combined_df):,} total sensor records!\n")
+    print(f" Combined {len(file_paths)} NASA files into {len(combined_df):,} total sensor records!\n")
     return combined_df
 
 
@@ -38,12 +38,12 @@ def analyze_and_rag_all():
     sensor_cols = ['sensor_2', 'sensor_3', 'sensor_4', 'sensor_11']
 
     # 2. Anomaly Detection across whole dataset
-    print("🤖 Running Isolation Forest model on all records...")
+    print(" Running Isolation Forest model on all records...")
     model = IsolationForest(contamination=0.02, random_state=42)
     df['is_anomaly'] = model.fit_predict(df[sensor_cols])
 
     anomalies = df[df['is_anomaly'] == -1]
-    print(f"🚨 Total Anomalies Detected: {len(anomalies):,} out of {len(df):,} records.")
+    print(f" Total Anomalies Detected: {len(anomalies):,} out of {len(df):,} records.")
 
     # 3. Group and Rank Critical Incidents by Engine Unit & File
     # We find the maximum operating cycle reached per anomalous unit to flag critical failure stages
@@ -61,13 +61,13 @@ def analyze_and_rag_all():
         .sort_values(by='max_cycle', ascending=False)
     )
 
-    print(f"📊 Identified {len(critical_cases)} distinct engines exhibiting abnormal wear patterns.")
+    print(f" Identified {len(critical_cases)} distinct engines exhibiting abnormal wear patterns.")
 
     # Take Top 3 Most Severe Failure Cases to process
     top_critical = critical_cases.head(3)
 
     # 4. Initialize Vector DB
-    print("\n🧠 Loading ChromaDB vector database...")
+    print("\n Loading ChromaDB vector database...")
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_db = Chroma(persist_directory=DB_DIR, embedding_function=embeddings)
 
@@ -87,7 +87,7 @@ def analyze_and_rag_all():
             f"Troubleshooting procedures, motor fault handling, and repair SOPs."
         )
 
-        print(f"🔴 CRITICAL TARGET #{index + 1}: Engine Unit #{unit} ({source_file})")
+        print(f" CRITICAL TARGET #{index + 1}: Engine Unit #{unit} ({source_file})")
         print(f"   ├─ Max Cycle Reached: {cycle}")
         print(f"   ├─ Total Anomaly Signals: {anom_count}")
         print(f"   └─ Search Query: \"{query}\"")
@@ -95,7 +95,7 @@ def analyze_and_rag_all():
         # Retrieve matching manuals
         results = vector_db.similarity_search(query, k=2)
 
-        print("\n   🔧 RETRIEVED MAINTENANCE MANUAL INSTRUCTIONS:")
+        print("\n RETRIEVED MAINTENANCE MANUAL INSTRUCTIONS:")
         for i, doc in enumerate(results, 1):
             src = doc.metadata.get('source', 'Manual')
             pg = doc.metadata.get('page', 'N/A')
