@@ -21,4 +21,14 @@ An end-to-end Agentic AI system that continuously monitors multivariate industri
                                        ▼
                        [Structured Maintenance Action Ticket]
 
-
+> [!IMPORTANT]
+> **Prerequisites & First-Time Execution Order:**
+> 1. You **must** run `ingest_manuals.py` first to process the PDF documentation and create the `./chroma_db` local vector database.
+> 2. Set your Groq API key in your PowerShell session:
+>    ```powershell
+>    $env:GROQ_API_KEY="gsk_YourActualGroqKeyHere"
+>    ```
+> 3. Execute `agent_system.py` to start the interactive maintenance agent:
+>    ```powershell
+>    .\.venv\Scripts\python.exe agent_system.py
+>    ```
