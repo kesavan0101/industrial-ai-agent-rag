@@ -7,6 +7,7 @@ An end-to-end Agentic AI system that continuously monitors multivariate industri
 ![LangChain](https://img.shields.io/badge/Framework-LangChain-green)
 ![Groq](https://img.shields.io/badge/LLM-Llama_3.3_70B-purple)
 ![Vector DB](https://img.shields.io/badge/Vector_DB-ChromaDB-blueviolet)
+![Sample Output Preview](output_preview.png)
 
 ---
 
